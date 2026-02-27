@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.claude/
+.copilot/
+.github/
+.cursor/
+build/
+coverage/
+actions-runner/
+bun.lock
+*.min.js
+*.min.css

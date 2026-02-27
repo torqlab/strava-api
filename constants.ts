@@ -4,9 +4,40 @@ export const STRAVA_API_MAX_BACKOFF_MS = 16000;
 
 export const STRAVA_API_MAX_RETRIES = 3;
 
+export const STRAVA_AUTH_DEFAULT_SCOPE = 'activity:read';
+
+export const STRAVA_OAUTH_BASE_URL = 'https://www.strava.com/oauth';
+
 export const STRAVA_API_BASE_URL = 'https://www.strava.com/api/v3';
 
 export const STRAVA_API_ENDPOINTS = {
-  ACTIVITIES: '/athlete/activities',
-  ACTIVITY: '/activities',
+  TOKEN: `${STRAVA_OAUTH_BASE_URL}/token`,
+  AUTH: `${STRAVA_OAUTH_BASE_URL}/authorize`,
+  ACTIVITIES: `${STRAVA_API_BASE_URL}/athlete/activities`,
+
+  /**
+   * Requires `/:id` for a specific activity.
+   */
+  ACTIVITY: `${STRAVA_API_BASE_URL}/activities`,
 };
+
+export const STRAVA_API_ERROR_CODES = {
+  UNAUTHORIZED: 'UNAUTHORIZED',
+  FORBIDDEN: 'FORBIDDEN',
+  RATE_LIMITED: 'RATE_LIMITED',
+  SERVER_ERROR: 'SERVER_ERROR',
+  MALFORMED_RESPONSE: 'MALFORMED_RESPONSE',
+  INVALID_ID: 'INVALID_ID',
+  NOT_FOUND: 'NOT_FOUND',
+  NETWORK_ERROR: 'NETWORK_ERROR',
+  VALIDATION_FAILED: 'VALIDATION_FAILED',
+  INVALID_CONFIG: 'INVALID_CONFIG',
+  INVALID_CODE: 'INVALID_CODE',
+} as const;
+
+export const STRAVA_API_STATUS_CODES = {
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
+  RATE_LIMITED: 429,
+  SERVER_ERROR: 500,
+} as const;

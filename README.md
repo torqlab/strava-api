@@ -123,7 +123,7 @@ const activities = await fetchActivities(config, {
   per_page: 30,
   page: 1,
   before: 1640995200, // Unix timestamp
-  after: 1609459200,  // Unix timestamp
+  after: 1609459200, // Unix timestamp
 });
 ```
 
@@ -135,7 +135,6 @@ The `StravaApiConfig` interface supports:
 - `refreshToken`: OAuth2 refresh token for automatic renewal
 - `clientId`: OAuth2 client ID for token refresh
 - `clientSecret`: OAuth2 client secret for token refresh
-- `baseUrl`: Custom API base URL (defaults to Strava API v3)
 - `guardrails`: Optional validation callback for activities
 
 ## Error Handling

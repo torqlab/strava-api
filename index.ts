@@ -1,5 +1,5 @@
-export * from './types';
-export * from './constants';
-export * from './activity';
-export * from './activities';
-export * from './auth';
+export { default as fetchStravaActivity } from './fetch-activity';
+export { default as fetchStravaActivities } from './fetch-activities';
+export { default as getStravaAuthUrl } from './get-auth-url';
+export { default as exchangeStravaAuthToken } from './exchange-token';
+export { default as refreshStravaAuthToken } from './refresh-token';

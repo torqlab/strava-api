@@ -1,4 +1,4 @@
-import { DEFAULT_WAIT_MS, WINDOW_MS } from "./constants";
+import { DEFAULT_WAIT_MS, WINDOW_MS } from './constants';
 
 /**
  * Handles rate limit responses from Strava API by waiting appropriately.
@@ -31,14 +31,9 @@ import { DEFAULT_WAIT_MS, WINDOW_MS } from "./constants";
  */
 const handleRateLimit = async (response: Response): Promise<void> => {
   const retryAfterHeader = response.headers.get('Retry-After');
-  const retryAfterSeconds = retryAfterHeader
-    ? Number.parseFloat(retryAfterHeader)
-    : NaN;
-  const shouldWaitAndRetry = (
-    !Number.isNaN(retryAfterSeconds) &&
-    Number.isFinite(retryAfterSeconds) &&
-    retryAfterSeconds > 0
-  );
+  const retryAfterSeconds = retryAfterHeader ? Number.parseFloat(retryAfterHeader) : NaN;
+  const shouldWaitAndRetry =
+    !Number.isNaN(retryAfterSeconds) && Number.isFinite(retryAfterSeconds) && retryAfterSeconds > 0;
 
   if (shouldWaitAndRetry) {
     const waitMs = Math.ceil(retryAfterSeconds * 1000);
@@ -51,13 +46,12 @@ const handleRateLimit = async (response: Response): Promise<void> => {
     const rateLimitUsage = response.headers.get('X-RateLimit-Usage');
     const limit = rateLimitLimit ? Number.parseInt(rateLimitLimit, 10) : NaN;
     const usage = rateLimitUsage ? Number.parseInt(rateLimitUsage, 10) : NaN;
-    const shouldWaitInWindow = (
+    const shouldWaitInWindow =
       !Number.isNaN(limit) &&
       !Number.isNaN(usage) &&
       Number.isFinite(limit) &&
       Number.isFinite(usage) &&
-      usage >= limit
-    );
+      usage >= limit;
 
     if (shouldWaitInWindow) {
       await new Promise((resolve) => {

@@ -1,11 +1,7 @@
 import { describe, test, expect } from 'bun:test';
 import handleRateLimit from './handle-rate-limit';
 
-type Case = [
-  string,
-  Response,
-  number,
-];
+type Case = [string, Response, number];
 
 describe('handle-rate-limit', () => {
   describe('short wait', () => {

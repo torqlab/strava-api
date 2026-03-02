@@ -25,32 +25,25 @@ const handleFetchError = async <T>(
   error: unknown,
 ): Promise<T> => {
   const errorCode = parseErrorCode(error);
-  const isRateLimitedError = (
-    errorCode === STRAVA_API_ERROR_CODES.RATE_LIMITED
-  );
-  const isUnauthorizedError = (
-    errorCode === STRAVA_API_ERROR_CODES.UNAUTHORIZED
-  );
+  const isRateLimitedError = errorCode === STRAVA_API_ERROR_CODES.RATE_LIMITED;
+  const isUnauthorizedError = errorCode === STRAVA_API_ERROR_CODES.UNAUTHORIZED;
 
   if (isRateLimitedError) {
     // Use the actual response if available.
     // Otherwise create a mock with default wait.
     const errorWithResponse = error as StravaApiErrorWithResponse;
-    const rateLimitedResponse = errorWithResponse.response ?? (
+    const rateLimitedResponse =
+      errorWithResponse.response ??
       new Response('Rate Limited', {
         status: STRAVA_API_STATUS_CODES.RATE_LIMITED,
         headers: { 'Retry-After': '60' },
-      })
-    );
+      });
 
     await handleRateLimit(rateLimitedResponse);
     throw error;
   } else if (isUnauthorizedError) {
-    const canRefreshToken = (
-      Boolean(config.refreshToken) &&
-      Boolean(config.clientId) &&
-      Boolean(config.clientSecret)
-    );
+    const canRefreshToken =
+      Boolean(config.refreshToken) && Boolean(config.clientId) && Boolean(config.clientSecret);
 
     if (canRefreshToken) {
       try {

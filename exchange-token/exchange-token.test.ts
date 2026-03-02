@@ -1,6 +1,6 @@
 import { describe, test, expect, beforeEach, afterEach } from 'bun:test';
 import exchangeToken from './exchange-token';
-import { StravaAuthConfig, StravaAuthTokenResponse, StravaAuthError } from '../types';
+import { StravaAuthConfig, StravaAuthTokenResponse, StravaApiError } from '../types';
 
 type Case = [
   string,
@@ -9,12 +9,12 @@ type Case = [
     config: StravaAuthConfig;
     mockResponse?: Response;
     shouldThrow: boolean;
-    expectedError?: StravaAuthError;
+    expectedError?: StravaApiError;
     expectedTokens?: StravaAuthTokenResponse;
   },
 ];
 
-const parseError = (error: Error): StravaAuthError => JSON.parse(error.message) as StravaAuthError;
+const parseError = (error: Error): StravaApiError => JSON.parse(error.message) as StravaApiError;
 
 describe('exchange-token', () => {
   const fetchState = { originalFetch: globalThis.fetch };

@@ -34,10 +34,7 @@ const parseTokenResponse = async (response: Response): Promise<StravaAuthTokenRe
   try {
     return (await response.json()) as StravaAuthTokenResponse;
   } catch {
-    throw createError(
-      'MALFORMED_RESPONSE',
-      'Invalid response format from token endpoint',
-    );
+    throw createError('MALFORMED_RESPONSE', 'Invalid response format from token endpoint');
   }
 };
 
@@ -59,6 +56,7 @@ const parseTokenResponse = async (response: Response): Promise<StravaAuthTokenRe
  *   - 'NETWORK_ERROR' (retryable): Network connection failure.
  *   - 'UNAUTHORIZED' (not retryable): Invalid client credentials or authorization code.
  *   - 'MALFORMED_RESPONSE' (not retryable): Invalid JSON response or missing required fields.
+ *   - And others...
  *
  * @see {@link https://developers.strava.com/docs/authentication/#tokenexchange | Strava Token Exchange}
  *
@@ -96,29 +94,17 @@ const exchangeToken = async (
       const tokenData = await parseTokenResponse(response.clone());
 
       if (!tokenData.access_token) {
-        throw createError(
-          'MALFORMED_RESPONSE',
-          'Access token not found in response',
-        );
+        throw createError('MALFORMED_RESPONSE', 'Access token not found in response');
       } else if (!tokenData.refresh_token) {
-        throw createError(
-          'MALFORMED_RESPONSE',
-          'Refresh token not found in response',
-        );
+        throw createError('MALFORMED_RESPONSE', 'Refresh token not found in response');
       } else {
         return tokenData;
       }
     } else {
       if (response.status === 401 || response.status === 403) {
-        throw createError(
-          'UNAUTHORIZED',
-          'Invalid client credentials or authorization code',
-        );
+        throw createError('UNAUTHORIZED', 'Invalid client credentials or authorization code');
       } else {
-        throw createError(
-          'UNAUTHORIZED',
-          `Token exchange failed with status ${response.status}`,
-        );
+        throw createError('UNAUTHORIZED', `Token exchange failed with status ${response.status}`);
       }
     }
   }

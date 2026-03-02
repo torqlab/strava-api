@@ -1,6 +1,8 @@
 import { describe, test, expect, beforeEach, afterEach } from 'bun:test';
+
 import refreshToken from './refresh-token';
 import { StravaApiConfig, StravaApiError } from '../types';
+import type { Output } from './types';
 
 type Case = [
   string,
@@ -9,7 +11,7 @@ type Case = [
     mockResponse: Response | Error;
     shouldThrow: boolean;
     expectedError?: StravaApiError;
-    expectedToken?: string;
+    expectedTokens?: Output;
   },
 ];
 
@@ -47,7 +49,10 @@ describe('refresh-token', () => {
           { status: 200 },
         ),
         shouldThrow: false,
-        expectedToken: 'new-access-token-456',
+        expectedTokens: {
+          access_token: 'new-access-token-456',
+          refresh_token: 'new-refresh-token-789',
+        },
       },
     ],
     [
@@ -178,7 +183,7 @@ describe('refresh-token', () => {
     ],
   ])(
     '%#. %s',
-    async (_name, { config, mockResponse, shouldThrow, expectedError, expectedToken }) => {
+    async (_name, { config, mockResponse, shouldThrow, expectedError, expectedTokens }) => {
       if (mockResponse instanceof Error) {
         // @ts-expect-error - mockResponse is an Error
         globalThis.fetch = () => {
@@ -203,7 +208,7 @@ describe('refresh-token', () => {
         }
       } else {
         const result = await refreshToken(config);
-        expect(result).toBe(String(expectedToken));
+        expect(result).toStrictEqual(expectedTokens!);
       }
     },
   );

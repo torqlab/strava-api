@@ -3,11 +3,7 @@ import { describe, test, expect } from 'bun:test';
 import getAuthHeaders from './get-auth-headers';
 import { StravaApiConfig } from '../../types';
 
-type Case = [
-  string,
-  StravaApiConfig,
-  HeadersInit,
-];
+type Case = [string, StravaApiConfig, HeadersInit];
 
 describe('get-auth-headers', () => {
   test.each<Case>([

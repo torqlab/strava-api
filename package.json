@@ -10,13 +10,7 @@
   },
   "keywords": [
     "strava",
-    "api",
-    "fitness",
-    "activities",
-    "oauth",
-    "typescript",
-    "rate-limiting",
-    "retry"
+    "torq"
   ],
   "type": "module",
   "main": "dist/index.cjs",

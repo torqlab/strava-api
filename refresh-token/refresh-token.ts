@@ -14,10 +14,7 @@ import type { Output } from './types';
  * @returns {Error} Error.
  * @internal
  */
-const createError = (
-  code: StravaApiErrorCode,
-  message: string,
-): Error => {
+const createError = (code: StravaApiErrorCode, message: string): Error => {
   const error: StravaApiError = {
     retryable: false,
     code,
@@ -34,9 +31,7 @@ const createError = (
  * @throws {Error} Throws error with `NETWORK_ERROR` code if fetch fails.
  * @internal
  */
-const doRefreshToken = async (
-  body: URLSearchParams,
-): Promise<Response> => {
+const doRefreshToken = async (body: URLSearchParams): Promise<Response> => {
   try {
     return await fetch(STRAVA_API_ENDPOINTS.TOKEN, {
       method: 'POST',
@@ -57,16 +52,11 @@ const doRefreshToken = async (
  * @throws {Error} Throws error with `MALFORMED_RESPONSE` code if JSON parsing fails.
  * @internal
  */
-const parseApiResponse = async (
-  response: Response,
-): Promise<StravaApiTokenRefreshResponse> => {
+const parseApiResponse = async (response: Response): Promise<StravaApiTokenRefreshResponse> => {
   try {
     return (await response.json()) as StravaApiTokenRefreshResponse;
   } catch {
-    throw createError(
-      'MALFORMED_RESPONSE',
-      'Invalid response format from token refresh endpoint',
-    );
+    throw createError('MALFORMED_RESPONSE', 'Invalid response format from token refresh endpoint');
   }
 };
 
@@ -99,16 +89,11 @@ const parseApiResponse = async (
  * });
  * ```
  */
-const refreshToken = async (
-  config: StravaApiConfig,
-): Promise<Output> => {
+const refreshToken = async (config: StravaApiConfig): Promise<Output> => {
   if (!config.refreshToken) {
     throw createError('UNAUTHORIZED', 'Refresh token is not available');
   } else if (!config.clientId || !config.clientSecret) {
-    throw createError(
-      'UNAUTHORIZED',
-      'Client ID and client secret are required for token refresh',
-    );
+    throw createError('UNAUTHORIZED', 'Client ID and client secret are required for token refresh');
   } else {
     const body = new URLSearchParams({
       client_id: config.clientId,
@@ -130,10 +115,7 @@ const refreshToken = async (
           refresh_token: jsonData.refresh_token,
         };
       } else {
-        throw createError(
-          'MALFORMED_RESPONSE',
-          'Access token not found in refresh response',
-        );
+        throw createError('MALFORMED_RESPONSE', 'Access token not found in refresh response');
       }
     }
   }

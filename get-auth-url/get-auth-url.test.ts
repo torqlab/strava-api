@@ -1,18 +1,19 @@
 import { describe, test, expect } from 'bun:test';
+
 import getAuthorizationUrl from './get-auth-url';
-import { StravaAuthConfig, StravaAuthError } from '../types';
+import { StravaAuthConfig, StravaApiError } from '../types';
 
 type Case = [
   string,
   {
     config: StravaAuthConfig;
     shouldThrow: boolean;
-    expectedError?: StravaAuthError;
+    expectedError?: StravaApiError;
     expectedUrlContains?: string[];
   },
 ];
 
-const parseError = (error: Error): StravaAuthError => JSON.parse(error.message) as StravaAuthError;
+const parseError = (error: Error): StravaApiError => JSON.parse(error.message) as StravaApiError;
 
 describe('get-authorization-url', () => {
   test.each<Case>([

@@ -13,10 +13,7 @@ import type { StravaApiConfig } from '../types';
  * @throws {Error} Throws StravaApiError with 'NETWORK_ERROR' code if fetch fails.
  * @internal
  */
-const doFetch = async <T>(
-  url: string,
-  config: StravaApiConfig,
-): Promise<T> => {
+const doFetch = async <T>(url: string, config: StravaApiConfig): Promise<T> => {
   try {
     const response = await fetch(url, {
       method: 'GET',
@@ -59,18 +56,11 @@ const doFetch = async <T>(
  * );
  * ```
  */
-const client = async <T>(
-  url: string,
-  config: StravaApiConfig,
-): Promise<T> => {
+const client = async <T>(url: string, config: StravaApiConfig): Promise<T> => {
   try {
     return await doFetch<T>(url, config);
   } catch (error) {
-    return await handleFetchError<T>(
-      (newConfig) => doFetch<T>(url, newConfig),
-      config,
-      error,
-    );
+    return await handleFetchError<T>((newConfig) => doFetch<T>(url, newConfig), config, error);
   }
 };
 

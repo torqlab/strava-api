@@ -10,18 +10,12 @@ import { STRAVA_API_STATUS_CODES } from '../../constants';
  * @throws {Error} Throws StravaApiError with 'MALFORMED_RESPONSE' code if JSON parsing fails.
  * @internal
  */
-const parseApiResponse = async <T>(
-  response: Response,
-): Promise<T> => {
+const parseApiResponse = async <T>(response: Response): Promise<T> => {
   try {
     const data = (await response.json()) as unknown;
 
     if (!data) {
-      throw createError(
-        'MALFORMED_RESPONSE',
-        'Expected non-empty response from Strava API',
-        false,
-      );
+      throw createError('MALFORMED_RESPONSE', 'Expected non-empty response from Strava API', false);
     } else {
       return data as T;
     }
@@ -29,11 +23,7 @@ const parseApiResponse = async <T>(
     const parsedError = parseError(error);
 
     if (parsedError) {
-      throw createError(
-        'MALFORMED_RESPONSE',
-        'Invalid response format from Strava API',
-        false,
-      );
+      throw createError('MALFORMED_RESPONSE', 'Invalid response format from Strava API', false);
     } else {
       throw error;
     }
@@ -67,9 +57,7 @@ const parseApiResponse = async <T>(
  * const data = await parseResponse(response);
  * ```
  */
-const parseResponse = async <T>(
-  response: Response,
-): Promise<T> => {
+const parseResponse = async <T>(response: Response): Promise<T> => {
   const isUnauthorized = response.status === STRAVA_API_STATUS_CODES.UNAUTHORIZED;
   const isForbidden = response.status === STRAVA_API_STATUS_CODES.FORBIDDEN;
   const isRateLimited = response.status === STRAVA_API_STATUS_CODES.RATE_LIMITED;
@@ -82,11 +70,7 @@ const parseResponse = async <T>(
       false,
     );
   } else if (isForbidden) {
-    throw createError(
-      'FORBIDDEN',
-      'Insufficient permissions to access Strava API',
-      false,
-    );
+    throw createError('FORBIDDEN', 'Insufficient permissions to access Strava API', false);
   } else if (isRateLimited) {
     throw createError(
       'RATE_LIMITED',
@@ -95,17 +79,9 @@ const parseResponse = async <T>(
       response,
     );
   } else if (isServerError) {
-    throw createError(
-      'SERVER_ERROR',
-      'Strava API server error',
-      true,
-    );
+    throw createError('SERVER_ERROR', 'Strava API server error', true);
   } else if (!response.ok) {
-    throw createError(
-      'SERVER_ERROR',
-      `Unexpected API error: ${response.status}`,
-      false,
-    );
+    throw createError('SERVER_ERROR', `Unexpected API error: ${response.status}`, false);
   } else {
     return parseApiResponse<T>(response);
   }

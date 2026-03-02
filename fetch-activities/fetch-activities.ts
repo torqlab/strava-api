@@ -4,10 +4,7 @@ import {
   STRAVA_API_INITIAL_BACKOFF_MS,
   STRAVA_API_ENDPOINTS,
 } from '../constants';
-import type {
-  StravaApiConfig,
-  StravaActivity,
-} from '../types';
+import type { StravaApiConfig, StravaActivity } from '../types';
 
 /**
  * Fetches a list of activities from Strava API for the authenticated athlete.

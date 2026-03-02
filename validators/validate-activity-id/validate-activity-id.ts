@@ -22,11 +22,8 @@ import { StravaApiError } from '../../types';
 const validateActivityId = (activityId: string): void => {
   const trimmedActivityId = String(activityId).trim();
   const numericActivityId = Number(trimmedActivityId);
-  const isValidNumericActivityId = (
-    !Number.isNaN(numericActivityId) &&
-    Number.isFinite(numericActivityId) &&
-    numericActivityId > 0
-  );
+  const isValidNumericActivityId =
+    !Number.isNaN(numericActivityId) && Number.isFinite(numericActivityId) && numericActivityId > 0;
 
   if (!trimmedActivityId) {
     const error: StravaApiError = {

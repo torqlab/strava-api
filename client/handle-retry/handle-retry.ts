@@ -1,9 +1,6 @@
 import { StravaApiError } from '../../types';
 import { Input, RetryFunction } from './types';
-import {
-  STRAVA_API_INITIAL_BACKOFF_MS,
-  STRAVA_API_MAX_BACKOFF_MS,
-} from '../../constants';
+import { STRAVA_API_INITIAL_BACKOFF_MS, STRAVA_API_MAX_BACKOFF_MS } from '../../constants';
 
 /**
  * Parses an Error object to extract `ActivityError` if present.
@@ -67,13 +64,7 @@ const attemptWithBackoff = async <T>(
         const nextBackoffMs = currentBackoffMs * 2;
         const nextAttemptIndex = attemptIndex + 1;
 
-        return attemptWithBackoff(
-          fn,
-          nextAttemptIndex,
-          maxRetries,
-          nextBackoffMs,
-          currentError,
-        );
+        return attemptWithBackoff(fn, nextAttemptIndex, maxRetries, nextBackoffMs, currentError);
       }
     }
   }
@@ -109,13 +100,6 @@ const handleRetry = async <T>({
   fn,
   maxRetries,
   initialBackoffMs = STRAVA_API_INITIAL_BACKOFF_MS,
-}: Input<T>): Promise<T> =>
-  attemptWithBackoff(
-    fn,
-    0,
-    maxRetries,
-    initialBackoffMs,
-    null,
-  );
+}: Input<T>): Promise<T> => attemptWithBackoff(fn, 0, maxRetries, initialBackoffMs, null);
 
 export default handleRetry;

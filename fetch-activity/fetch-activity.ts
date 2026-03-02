@@ -90,13 +90,12 @@ const fetchActivity = async (
   return handleRetry({
     maxRetries: STRAVA_API_MAX_RETRIES,
     initialBackoffMs: STRAVA_API_INITIAL_BACKOFF_MS,
-    
+
     /**
      * Fetches activity with retry capability.
      * @returns {Promise<StravaActivity | null>} The activity data or null if not found.
      */
-    fn: async (): Promise<StravaActivity | null> =>
-      fetchActivityWithValidation(config, activityId),
+    fn: async (): Promise<StravaActivity | null> => fetchActivityWithValidation(config, activityId),
   });
 };
 

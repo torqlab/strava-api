@@ -1,7 +1,4 @@
-import type {
-  StravaApiError,
-  StravaApiErrorCode,
-} from '../../types';
+import type { StravaApiError, StravaApiErrorCode } from '../../types';
 
 /**
  * Creates an `StravaApiError` wrapped in an `Error` object.

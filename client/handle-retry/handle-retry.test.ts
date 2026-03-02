@@ -112,32 +112,29 @@ describe('handle-retry', () => {
         expectedAttempts: 3,
       },
     ],
-  ])(
-    '%#. %s',
-    async (_name, input, { expectedOk, expectedAttempts }) => {
-      const attemptCounter = { count: 0 };
-      const wrappedFn = async () => {
-        attemptCounter.count = attemptCounter.count + 1;
-        return await input.fn();
-      };
+  ])('%#. %s', async (_name, input, { expectedOk, expectedAttempts }) => {
+    const attemptCounter = { count: 0 };
+    const wrappedFn = async () => {
+      attemptCounter.count = attemptCounter.count + 1;
+      return await input.fn();
+    };
 
-      if (expectedOk) {
-        const result = await handleRetry({
+    if (expectedOk) {
+      const result = await handleRetry({
+        ...input,
+        fn: wrappedFn,
+      });
+
+      expect(result).toBe('success');
+      expect(attemptCounter.count).toBe(expectedAttempts);
+    } else {
+      await expect(async () => {
+        await handleRetry({
           ...input,
           fn: wrappedFn,
         });
-
-        expect(result).toBe('success');
-        expect(attemptCounter.count).toBe(expectedAttempts);
-      } else {
-        expect(async () => {
-          await handleRetry({
-            ...input,
-            fn: wrappedFn,
-          });
-        }).toThrow();
-        expect(attemptCounter.count).toBe(expectedAttempts);
-      }
-    },
-  );
+      }).toThrow();
+      expect(attemptCounter.count).toBe(expectedAttempts);
+    }
+  });
 });

@@ -1,6 +1,6 @@
 {
   "name": "@torqlab/strava-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Strava API client with automatic rate limiting, retry handling, and comprehensive type safety.",
   "license": "MIT",
   "author": {

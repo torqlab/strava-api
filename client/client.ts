@@ -12,25 +12,16 @@ import type { StravaApiConfig } from '../types';
  * @throws {Error} Throws StravaApiError with 'NETWORK_ERROR' code if fetch fails.
  * @internal
  */
-const doFetch = async (
-  url: string,
-  config: StravaApiConfig,
-): Promise<Response> => {
+const doFetch = async (url: string, config: StravaApiConfig): Promise<Response> => {
   try {
     return await fetch(url, {
       method: 'GET',
       headers: getAuthHeaders(config),
     });
   } catch (error) {
-    const errorMessage = error instanceof Error
-      ? error.message
-      : 'Unknown error';
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
 
-    throw createError(
-      'NETWORK_ERROR',
-      `Failed to connect to Strava API: ${errorMessage}`,
-      true,
-    );
+    throw createError('NETWORK_ERROR', `Failed to connect to Strava API: ${errorMessage}`, true);
   }
 };
 
@@ -64,10 +55,7 @@ const doFetch = async (
  * );
  * ```
  */
-const client = async <T>(
-  url: string,
-  config: StravaApiConfig,
-): Promise<T> => {
+const client = async <T>(url: string, config: StravaApiConfig): Promise<T> => {
   try {
     const response = await doFetch(url, config);
 

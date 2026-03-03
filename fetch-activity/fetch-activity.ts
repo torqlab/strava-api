@@ -1,5 +1,5 @@
 import { validateActivityId } from '../validators';
-import type { StravaApiConfig, StravaActivity } from '../types'
+import type { StravaApiConfig, StravaActivity } from '../types';
 import client, { createError, handleRetry } from '../client';
 import {
   STRAVA_API_MAX_RETRIES,
@@ -102,8 +102,7 @@ const fetchActivity = async (
      * Fetches activity with retry capability.
      * @returns {Promise<StravaActivity | null>} The activity data or null if not found.
      */
-    fn: async (): Promise<StravaActivity | null> =>
-      fetchActivityWithValidation(config, activityId),
+    fn: async (): Promise<StravaActivity | null> => fetchActivityWithValidation(config, activityId),
   });
 };
 

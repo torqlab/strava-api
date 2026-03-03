@@ -236,7 +236,8 @@ describe('fetch-activities', () => {
         shouldThrow: true,
         expectedError: {
           code: 'NETWORK_ERROR',
-          message: 'Failed to connect to Strava API (https://www.strava.com/api/v3/athlete/activities): Network error',
+          message:
+            'Failed to connect to Strava API (https://www.strava.com/api/v3/athlete/activities): Network error',
           retryable: true,
         },
       },

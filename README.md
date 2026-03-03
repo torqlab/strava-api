@@ -1,3 +1,5 @@
+[![Publish](https://github.com/torqlab/strava-api/actions/workflows/publish.yml/badge.svg)](https://github.com/torqlab/strava-api/actions/workflows/publish.yml)
+
 # @torqlab/strava-api
 
 TypeScript client for the Strava API with automatic rate limiting, retry handling, and comprehensive type safety.

@@ -16,9 +16,14 @@ export const STRAVA_API_ENDPOINTS = {
   ACTIVITIES: `${STRAVA_API_BASE_URL}/athlete/activities`,
 
   /**
-   * Requires `/:id` for a specific activity.
+   * Returns the API endpoint URL for fetching a specific activity by ID.
+   * @param {string} id - The ID of the activity to fetch.
+   * @returns {string} The full API endpoint URL for the specified activity.
+   * @example
+   * const url = STRAVA_API_ENDPOINTS.ACTIVITY('123456789');
+   * => 'https://www.strava.com/api/v3/activities/123456789'
    */
-  ACTIVITY: `${STRAVA_API_BASE_URL}/activities`,
+  ACTIVITY: (id: string) => `${STRAVA_API_BASE_URL}/activities/${id}`,
 };
 
 export const STRAVA_API_ERROR_CODES = {

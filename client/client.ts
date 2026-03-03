@@ -21,7 +21,11 @@ const doFetch = async (url: string, config: StravaApiConfig): Promise<Response> 
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
 
-    throw createError('NETWORK_ERROR', `Failed to connect to Strava API: ${errorMessage}`, true);
+    throw createError(
+      'NETWORK_ERROR',
+      `Failed to connect to Strava API (${url}): ${errorMessage}`,
+      true,
+    );
   }
 };
 

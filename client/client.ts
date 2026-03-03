@@ -6,23 +6,26 @@ import type { StravaApiConfig } from '../types';
 
 /**
  * Fetches from Strava API.
- * @template T - The expected return type of the API response (e.g. `StravaActivity`).
  * @param {string} url - The API endpoint URL.
  * @param {StravaApiConfig} config - Strava API configuration.
- * @returns {Promise<T>} Promise resolving to the fetch response.
+ * @returns {Promise<Response>} Promise resolving to the fetch response.
  * @throws {Error} Throws StravaApiError with 'NETWORK_ERROR' code if fetch fails.
  * @internal
  */
-const doFetch = async <T>(url: string, config: StravaApiConfig): Promise<T> => {
+const doFetch = async (url: string, config: StravaApiConfig): Promise<Response> => {
   try {
-    const response = await fetch(url, {
+    return await fetch(url, {
       method: 'GET',
       headers: getAuthHeaders(config),
     });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
 
-    return parseResponse(response);
-  } catch {
-    throw createError('NETWORK_ERROR', 'Failed to connect to Strava API', true);
+    throw createError(
+      'NETWORK_ERROR',
+      `Failed to connect to Strava API (${url}): ${errorMessage}`,
+      true,
+    );
   }
 };
 
@@ -58,9 +61,19 @@ const doFetch = async <T>(url: string, config: StravaApiConfig): Promise<T> => {
  */
 const client = async <T>(url: string, config: StravaApiConfig): Promise<T> => {
   try {
-    return await doFetch<T>(url, config);
+    const response = await doFetch(url, config);
+
+    return await parseResponse<T>(response);
   } catch (error) {
-    return await handleFetchError<T>((newConfig) => doFetch<T>(url, newConfig), config, error);
+    return await handleFetchError<T>(
+      async (newConfig) => {
+        const response = await doFetch(url, newConfig);
+
+        return await parseResponse<T>(response);
+      },
+      config,
+      error,
+    );
   }
 };
 

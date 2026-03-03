@@ -1,7 +1,11 @@
-import type { StravaApiConfig, StravaActivity } from '../types';
-import { STRAVA_API_MAX_RETRIES, STRAVA_API_INITIAL_BACKOFF_MS } from '../constants';
 import { validateActivityId } from '../validators';
+import type { StravaApiConfig, StravaActivity } from '../types';
 import client, { createError, handleRetry } from '../client';
+import {
+  STRAVA_API_MAX_RETRIES,
+  STRAVA_API_INITIAL_BACKOFF_MS,
+  STRAVA_API_ENDPOINTS,
+} from '../constants';
 
 /**
  * Fetches activity with token refresh support and validation.
@@ -15,7 +19,10 @@ const fetchActivityWithValidation = async (
   config: StravaApiConfig,
   activityId: string,
 ): Promise<StravaActivity | null> => {
-  const activity = await client<StravaActivity | null>(`/activities/${activityId}`, config);
+  const activity = await client<StravaActivity | null>(
+    STRAVA_API_ENDPOINTS.ACTIVITY(activityId),
+    config,
+  );
 
   if (config.guardrails) {
     const validationResult = activity

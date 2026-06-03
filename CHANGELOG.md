@@ -6,6 +6,15 @@ Please, document here only changes visible to the client app.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-06-03
+
+### [55 Query Athlete and GitHub App Authentication](https://github.com/torqlab/torq/issues/55)
+
+### Added
+
+- GitHub App authentication for GitHub MCP integration (replaces PAT-based auth)
+- Environment variables for GitHub App credentials in .env configuration
+
 ## [1.2.0] - 2026-06-03
 
 ### [55 Query Athlete](https://github.com/torqlab/torq/issues/55)

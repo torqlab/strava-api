@@ -13,6 +13,7 @@ export const STRAVA_API_BASE_URL = 'https://www.strava.com/api/v3';
 export const STRAVA_API_ENDPOINTS = {
   TOKEN: `${STRAVA_OAUTH_BASE_URL}/token`,
   AUTH: `${STRAVA_OAUTH_BASE_URL}/authorize`,
+  ATHLETE: `${STRAVA_API_BASE_URL}/athlete`,
   ACTIVITIES: `${STRAVA_API_BASE_URL}/athlete/activities`,
 
   /**

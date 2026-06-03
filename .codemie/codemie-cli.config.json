@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "activeProfile": "codemie-sso",
+  "profiles": {
+    "codemie-sso": {
+      "codeMieProject": "bohdan_balov@epam.com",
+      "provider": "ai-run-sso",
+      "codeMieUrl": "https://codemie.lab.epam.com",
+      "apiKey": "sso-provided",
+      "baseUrl": "https://codemie.lab.epam.com/code-assistant-api",
+      "model": "claude-haiku-4-5-20251001",
+      "haikuModel": "claude-haiku-4-5-20251001",
+      "sonnetModel": "claude-haiku-4-5-20251001",
+      "opusModel": "claude-opus-4-8",
+      "name": "codemie-sso"
+    }
+  }
+}

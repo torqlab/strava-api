@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fetch athlete module with `fetchStravaAthlete` function to retrieve authenticated athlete profile data
 - `StravaAthlete` TypeScript type definition for athlete response validation
 - New API endpoint constant for athlete endpoint
+- GitHub App authentication for GitHub MCP integration (replaces PAT-based auth)
+- Environment variables for GitHub App credentials in .env configuration
 
 ## [1.1.1] - 2026-03-03
 

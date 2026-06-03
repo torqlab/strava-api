@@ -48,6 +48,34 @@ export interface StravaApiTokenRefreshResponse {
 }
 
 /**
+ * Strava Athlete type.
+ * The type is dictated by the Strava API and used internally by the system.
+ * @see {@link https://developers.strava.com/docs/reference/#api-Athletes-getLoggedInAthlete | Strava Get Logged In Athlete Response Format}
+ */
+export interface StravaAthlete {
+  id: number;
+  resource_state?: number;
+  firstname?: string;
+  lastname?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  sex?: string;
+  summit?: boolean;
+  premium?: boolean;
+  created_at?: string;
+  updated_at?: string;
+  badge_type_id?: number;
+  weight?: number;
+  profile_medium?: string;
+  profile?: string;
+  friend?: unknown;
+  follower?: unknown;
+  username?: string;
+  bio?: string;
+}
+
+/**
  * Strava Activity type.
  * The type is dictated by the Strava API and used internally by the system.
  * @see {@link https://developers.strava.com/docs/reference/#api-Activities-getActivityById | Strava Activity Response Format}

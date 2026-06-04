@@ -6,24 +6,25 @@ You were absolutely right! npm changed its authentication approach. The migratio
 
 ### What This Means
 
-| Aspect | Old Approach | New Approach |
-|--------|--------------|--------------|
-| **Auth method** | NPM_TOKEN secret (legacy) | OIDC Trusted Publishing (recommended) |
-| **Secret rotation** | Manual, every 90 days | Not needed — expires automatically |
-| **Security scope** | Can access all npm packages | Scoped to this repo only |
-| **Provenance** | Not available | ✅ Cryptographically signed |
-| **Setup effort** | Add secret to GitHub | One-time package config on npmjs.com |
+| Aspect              | Old Approach                | New Approach                          |
+| ------------------- | --------------------------- | ------------------------------------- |
+| **Auth method**     | NPM_TOKEN secret (legacy)   | OIDC Trusted Publishing (recommended) |
+| **Secret rotation** | Manual, every 90 days       | Not needed — expires automatically    |
+| **Security scope**  | Can access all npm packages | Scoped to this repo only              |
+| **Provenance**      | Not available               | ✅ Cryptographically signed           |
+| **Setup effort**    | Add secret to GitHub        | One-time package config on npmjs.com  |
 
 ## What's Configured
 
 ✅ `.releaserc.json` — semantic-release config with changelog & git plugins  
 ✅ `.github/workflows/publish.yml` — OIDC workflow with proper permissions  
 ✅ `package.json` — includes `"provenance": true` for signed packages  
-✅ Documentation — updated guides explaining the new approach  
+✅ Documentation — updated guides explaining the new approach
 
 ## The Only Setup Needed
 
 **On npmjs.com (one-time):**
+
 1. Go to your package settings
 2. Enable **Automation & CI** under Publishing access
 3. Done!

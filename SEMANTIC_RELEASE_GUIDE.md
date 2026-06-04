@@ -20,6 +20,7 @@ All new commits must follow this format:
 ```
 
 ### Types:
+
 - **feat**: A new feature (bumps MINOR version)
 - **fix**: A bug fix (bumps PATCH version)
 - **chore**: Maintenance, dependencies, tooling (no version bump)
@@ -73,7 +74,9 @@ This repo uses **npm Trusted Publishing via OIDC**, which is more secure than NP
 **No setup needed** — GitHub provides the OIDC token automatically. The workflow uses `id-token: write` permission and `GITHUB_TOKEN` to authenticate.
 
 ### Package Configuration
+
 The `package.json` includes:
+
 ```json
 {
   "publishConfig": {

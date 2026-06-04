@@ -61,17 +61,28 @@ chore: upgrade eslint to v10
 
 **All automatic — no manual steps needed.**
 
-## 🔐 Required Secrets
+## 🔐 Authentication (OIDC Trusted Publishing)
 
-These must be set in GitHub repository settings:
+This repo uses **npm Trusted Publishing via OIDC**, which is more secure than NPM_TOKEN:
 
-- **GITHUB_TOKEN**: Automatically available (for git commits & releases)
-- **NPM_TOKEN**: Personal access token from npm (for publishing)
+- ✅ No secrets stored in GitHub
+- ✅ Token scoped to this repo only
+- ✅ Cryptographic proof of origin (provenance)
+- ✅ Automatic OIDC token exchange during CI
 
-To add NPM_TOKEN:
-1. Generate token at [npmjs.com/settings/tokens](https://www.npmjs.com/settings/tokens)
-2. Go to repo → Settings → Secrets and variables → Actions
-3. Add `NPM_TOKEN` with the generated token
+**No setup needed** — GitHub provides the OIDC token automatically. The workflow uses `id-token: write` permission and `GITHUB_TOKEN` to authenticate.
+
+### Package Configuration
+The `package.json` includes:
+```json
+{
+  "publishConfig": {
+    "provenance": true
+  }
+}
+```
+
+This enables npm to sign the package, proving it came directly from this GitHub repository.
 
 ## 🧪 Testing Locally (Optional)
 

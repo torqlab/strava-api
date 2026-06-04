@@ -6,6 +6,14 @@ Please, document here only changes visible to the client app.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] - 2026-06-04
+
+### [0 Claude Symlink Configuration](https://github.com/torqlab/strava-api/issues/0)
+
+### Changed
+
+- Updated `.claude` directory symlink configuration for proper Claude Code integration
+
 ## [1.3.0] - 2026-06-03
 
 ### [55 Query Athlete and GitHub App Authentication](https://github.com/torqlab/torq/issues/55)
